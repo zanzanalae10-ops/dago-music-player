@@ -35,6 +35,7 @@ fun LibraryScreen(
 ) {
     val strings = LocalAppStrings.current
     val songs by viewModel.allSongs.collectAsState()
+    val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = listOf(strings.tabSongs, strings.homeFavorites)
 
@@ -91,6 +92,7 @@ fun LibraryScreen(
                 items(displaySongs) { song ->
                     LibrarySongItem(
                         song = song,
+                        enableBlur = enableBlur,
                         onClick = { onSongSelected(song) },
                         onToggleFavorite = { viewModel.toggleFavorite(song) },
                         onDelete = { viewModel.deleteSong(song) }
@@ -106,6 +108,7 @@ fun LibraryScreen(
 @Composable
 fun LibrarySongItem(
     song: SongEntity,
+    enableBlur: Boolean,
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit,
     onDelete: () -> Unit
@@ -116,14 +119,16 @@ fun LibrarySongItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .glassmorphic()
+            .glassmorphic(enableBlur = enableBlur)
             .clickable { onClick() }
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_default_artwork),
+        coil.compose.AsyncImage(
+            model = song.path,
             contentDescription = "Song Artwork",
+            placeholder = painterResource(id = R.drawable.ic_default_artwork),
+            error = painterResource(id = R.drawable.ic_default_artwork),
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(52.dp)

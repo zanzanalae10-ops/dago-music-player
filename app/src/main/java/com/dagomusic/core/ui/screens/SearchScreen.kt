@@ -35,6 +35,7 @@ fun SearchScreen(
     val strings = LocalAppStrings.current
     var query by remember { mutableStateOf("") }
     val allSongs by viewModel.allSongs.collectAsState()
+    val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
 
     val filteredSongs = remember(query, allSongs) {
         if (query.isEmpty()) emptyList()
@@ -112,14 +113,16 @@ fun SearchScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .glassmorphic()
+                            .glassmorphic(enableBlur = enableBlur)
                             .clickable { onSongSelected(song) }
                             .padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_default_artwork),
+                        coil.compose.AsyncImage(
+                            model = song.path,
                             contentDescription = "Cover",
+                            placeholder = painterResource(id = R.drawable.ic_default_artwork),
+                            error = painterResource(id = R.drawable.ic_default_artwork),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .size(50.dp)

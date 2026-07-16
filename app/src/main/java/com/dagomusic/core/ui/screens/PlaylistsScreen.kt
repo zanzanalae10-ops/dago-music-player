@@ -28,6 +28,7 @@ fun PlaylistsScreen(
 ) {
     val strings = LocalAppStrings.current
     val playlists by viewModel.playlists.collectAsState()
+    val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
     var showDialog by remember { mutableStateOf(false) }
     var playlistName by remember { mutableStateOf("") }
 
@@ -71,7 +72,7 @@ fun PlaylistsScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .glassmorphic()
+                            .glassmorphic(enableBlur = enableBlur)
                             .clickable { /* Play list */ }
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically

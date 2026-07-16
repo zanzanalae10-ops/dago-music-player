@@ -9,11 +9,14 @@ import com.dagomusic.core.database.dao.MusicDao
 import com.dagomusic.core.database.entities.PlaylistEntity
 import com.dagomusic.core.database.entities.PlaylistItemEntity
 import com.dagomusic.core.database.entities.SongEntity
+import com.dagomusic.core.equalizer.AudioEffectManager
 import com.dagomusic.core.player.PlaybackConnection
+import com.dagomusic.core.scanner.MediaStoreScanner
 import com.dagomusic.core.settings.DagoDataStore
 import com.dagomusic.core.workers.LibraryScanWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +27,9 @@ class MusicViewModel @Inject constructor(
     private val musicDao: MusicDao,
     val dataStore: DagoDataStore,
     private val workManager: WorkManager,
-    private val playbackConnection: PlaybackConnection
+    private val playbackConnection: PlaybackConnection,
+    private val audioEffectManager: AudioEffectManager,
+    private val mediaStoreScanner: MediaStoreScanner
 ) : ViewModel() {
 
     // Songs
@@ -54,9 +59,37 @@ class MusicViewModel @Inject constructor(
     private val _currentPlayingSong = MutableStateFlow<SongEntity?>(null)
     val currentPlayingSong: StateFlow<SongEntity?> = _currentPlayingSong.asStateFlow()
 
+    // Equalizer States
+    val equalizerEnabled: StateFlow<Boolean> = dataStore.equalizerEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    val equalizerBassBoost: StateFlow<Int> = dataStore.equalizerBassBoost
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
+    val equalizerVirtualizer: StateFlow<Int> = dataStore.equalizerVirtualizer
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
+    val equalizerLoudness: StateFlow<Int> = dataStore.equalizerLoudness
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
+    val equalizerBand1: StateFlow<Float> = dataStore.equalizerBand1
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0f)
+
+    val equalizerBand2: StateFlow<Float> = dataStore.equalizerBand2
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0f)
+
+    val equalizerBand3: StateFlow<Float> = dataStore.equalizerBand3
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0f)
+
+    val equalizerBand4: StateFlow<Float> = dataStore.equalizerBand4
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0f)
+
+    val equalizerBand5: StateFlow<Float> = dataStore.equalizerBand5
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0f)
+
     init {
-        // Automatically scan library on startup
-        scanLibrary()
+        // Automatically scan library instantly on startup
+        scanLibraryInstant()
 
         // Sync active MediaItem back to SongEntity from local database
         viewModelScope.launch {
@@ -69,6 +102,16 @@ class MusicViewModel @Inject constructor(
                 } else {
                     _currentPlayingSong.value = null
                 }
+            }
+        }
+    }
+
+    fun scanLibraryInstant() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                mediaStoreScanner.scan()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -150,6 +193,48 @@ class MusicViewModel @Inject constructor(
     fun setPitch(pitch: Float) {
         viewModelScope.launch {
             dataStore.setPlaybackPitch(pitch)
+        }
+    }
+
+    // Equalizer Functions
+    fun setEqualizerEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            dataStore.setEqualizerEnabled(enabled)
+            audioEffectManager.setEffectsEnabled(enabled)
+        }
+    }
+
+    fun setBassBoost(value: Int) {
+        viewModelScope.launch {
+            dataStore.setEqualizerBassBoost(value)
+            audioEffectManager.setBassBoostStrength(value)
+        }
+    }
+
+    fun setVirtualizer(value: Int) {
+        viewModelScope.launch {
+            dataStore.setEqualizerVirtualizer(value)
+            audioEffectManager.setVirtualizerStrength(value)
+        }
+    }
+
+    fun setLoudness(value: Int) {
+        viewModelScope.launch {
+            dataStore.setEqualizerLoudness(value)
+            audioEffectManager.setLoudnessGain(value * 100) // gain is in milliBels
+        }
+    }
+
+    fun setBandLevel(band: Int, valueDb: Float) {
+        viewModelScope.launch {
+            when (band) {
+                0 -> dataStore.setEqualizerBand1(valueDb)
+                1 -> dataStore.setEqualizerBand2(valueDb)
+                2 -> dataStore.setEqualizerBand3(valueDb)
+                3 -> dataStore.setEqualizerBand4(valueDb)
+                4 -> dataStore.setEqualizerBand5(valueDb)
+            }
+            audioEffectManager.setBandLevel(band, valueDb)
         }
     }
 }

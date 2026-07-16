@@ -25,16 +25,17 @@ fun EqualizerScreen(
     onBack: () -> Unit
 ) {
     val strings = LocalAppStrings.current
-    var eqEnabled by remember { mutableStateOf(true) }
-    var bassBoost by remember { mutableFloatStateOf(15f) }
-    var virtualizer by remember { mutableFloatStateOf(20f) }
-    var loudness by remember { mutableFloatStateOf(5f) }
+    val eqEnabled by viewModel.equalizerEnabled.collectAsState()
+    val bassBoost by viewModel.equalizerBassBoost.collectAsState()
+    val virtualizer by viewModel.equalizerVirtualizer.collectAsState()
+    val loudness by viewModel.equalizerLoudness.collectAsState()
+    val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
 
-    var band60Hz by remember { mutableFloatStateOf(0f) }
-    var band230Hz by remember { mutableFloatStateOf(0f) }
-    var band910Hz by remember { mutableFloatStateOf(0f) }
-    var band4kHz by remember { mutableFloatStateOf(0f) }
-    var band14kHz by remember { mutableFloatStateOf(0f) }
+    val band60Hz by viewModel.equalizerBand1.collectAsState()
+    val band230Hz by viewModel.equalizerBand2.collectAsState()
+    val band910Hz by viewModel.equalizerBand3.collectAsState()
+    val band4kHz by viewModel.equalizerBand4.collectAsState()
+    val band14kHz by viewModel.equalizerBand5.collectAsState()
 
     val presetList = listOf("Normal", "Classical", "Dance", "Flat", "Folk", "Pop", "Rock", "Custom")
     var selectedPreset by remember { mutableStateOf("Normal") }
@@ -65,7 +66,7 @@ fun EqualizerScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .glassmorphic()
+                    .glassmorphic(enableBlur = enableBlur)
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -78,7 +79,7 @@ fun EqualizerScreen(
                 )
                 Switch(
                     checked = eqEnabled,
-                    onCheckedChange = { eqEnabled = it }
+                    onCheckedChange = { viewModel.setEqualizerEnabled(it) }
                 )
             }
 
@@ -87,7 +88,7 @@ fun EqualizerScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .glassmorphic()
+                        .glassmorphic(enableBlur = enableBlur)
                         .padding(16.dp)
                 ) {
                     Text("Select Preset", color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
@@ -101,17 +102,17 @@ fun EqualizerScreen(
                                 onClick = {
                                     selectedPreset = preset
                                     if (preset == "Rock") {
-                                        band60Hz = 4f
-                                        band230Hz = 3f
-                                        band910Hz = -1f
-                                        band4kHz = 2f
-                                        band14kHz = 5f
+                                        viewModel.setBandLevel(0, 4f)
+                                        viewModel.setBandLevel(1, 3f)
+                                        viewModel.setBandLevel(2, -1f)
+                                        viewModel.setBandLevel(3, 2f)
+                                        viewModel.setBandLevel(4, 5f)
                                     } else {
-                                        band60Hz = 0f
-                                        band230Hz = 0f
-                                        band910Hz = 0f
-                                        band4kHz = 0f
-                                        band14kHz = 0f
+                                        viewModel.setBandLevel(0, 0f)
+                                        viewModel.setBandLevel(1, 0f)
+                                        viewModel.setBandLevel(2, 0f)
+                                        viewModel.setBandLevel(3, 0f)
+                                        viewModel.setBandLevel(4, 0f)
                                     }
                                 },
                                 label = { Text(preset) }
@@ -124,7 +125,7 @@ fun EqualizerScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .glassmorphic()
+                        .glassmorphic(enableBlur = enableBlur)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -135,7 +136,7 @@ fun EqualizerScreen(
                         Text("60 Hz", color = Color.LightGray, modifier = Modifier.width(60.dp))
                         Slider(
                             value = band60Hz,
-                            onValueChange = { band60Hz = it; selectedPreset = "Custom" },
+                            onValueChange = { viewModel.setBandLevel(0, it); selectedPreset = "Custom" },
                             valueRange = -15f..15f,
                             modifier = Modifier.weight(1f)
                         )
@@ -147,7 +148,7 @@ fun EqualizerScreen(
                         Text("230 Hz", color = Color.LightGray, modifier = Modifier.width(60.dp))
                         Slider(
                             value = band230Hz,
-                            onValueChange = { band230Hz = it; selectedPreset = "Custom" },
+                            onValueChange = { viewModel.setBandLevel(1, it); selectedPreset = "Custom" },
                             valueRange = -15f..15f,
                             modifier = Modifier.weight(1f)
                         )
@@ -159,7 +160,7 @@ fun EqualizerScreen(
                         Text("910 Hz", color = Color.LightGray, modifier = Modifier.width(60.dp))
                         Slider(
                             value = band910Hz,
-                            onValueChange = { band910Hz = it; selectedPreset = "Custom" },
+                            onValueChange = { viewModel.setBandLevel(2, it); selectedPreset = "Custom" },
                             valueRange = -15f..15f,
                             modifier = Modifier.weight(1f)
                         )
@@ -171,7 +172,7 @@ fun EqualizerScreen(
                         Text("4 kHz", color = Color.LightGray, modifier = Modifier.width(60.dp))
                         Slider(
                             value = band4kHz,
-                            onValueChange = { band4kHz = it; selectedPreset = "Custom" },
+                            onValueChange = { viewModel.setBandLevel(3, it); selectedPreset = "Custom" },
                             valueRange = -15f..15f,
                             modifier = Modifier.weight(1f)
                         )
@@ -183,7 +184,7 @@ fun EqualizerScreen(
                         Text("14 kHz", color = Color.LightGray, modifier = Modifier.width(60.dp))
                         Slider(
                             value = band14kHz,
-                            onValueChange = { band14kHz = it; selectedPreset = "Custom" },
+                            onValueChange = { viewModel.setBandLevel(4, it); selectedPreset = "Custom" },
                             valueRange = -15f..15f,
                             modifier = Modifier.weight(1f)
                         )
@@ -195,7 +196,7 @@ fun EqualizerScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .glassmorphic()
+                        .glassmorphic(enableBlur = enableBlur)
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -205,36 +206,36 @@ fun EqualizerScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(strings.eqBassBoost, color = Color.LightGray, modifier = Modifier.width(80.dp))
                         Slider(
-                            value = bassBoost,
-                            onValueChange = { bassBoost = it },
+                            value = bassBoost.toFloat(),
+                            onValueChange = { viewModel.setBassBoost(it.toInt()) },
                             valueRange = 0f..100f,
                             modifier = Modifier.weight(1f)
                         )
-                        Text("${bassBoost.toInt()}%", color = Color.White, modifier = Modifier.width(36.dp))
+                        Text("$bassBoost%", color = Color.White, modifier = Modifier.width(36.dp))
                     }
 
                     // Virtualizer
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(strings.eqVirtualizer, color = Color.LightGray, modifier = Modifier.width(80.dp))
                         Slider(
-                            value = virtualizer,
-                            onValueChange = { virtualizer = it },
+                            value = virtualizer.toFloat(),
+                            onValueChange = { viewModel.setVirtualizer(it.toInt()) },
                             valueRange = 0f..100f,
                             modifier = Modifier.weight(1f)
                         )
-                        Text("${virtualizer.toInt()}%", color = Color.White, modifier = Modifier.width(36.dp))
+                        Text("$virtualizer%", color = Color.White, modifier = Modifier.width(36.dp))
                     }
 
                     // Loudness Enhancer
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Loudness", color = Color.LightGray, modifier = Modifier.width(80.dp))
                         Slider(
-                            value = loudness,
-                            onValueChange = { loudness = it },
+                            value = loudness.toFloat(),
+                            onValueChange = { viewModel.setLoudness(it.toInt()) },
                             valueRange = 0f..20f,
                             modifier = Modifier.weight(1f)
                         )
-                        Text("${loudness.toInt()} dB", color = Color.White, modifier = Modifier.width(36.dp))
+                        Text("$loudness dB", color = Color.White, modifier = Modifier.width(36.dp))
                     }
                 }
             }

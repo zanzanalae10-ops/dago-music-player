@@ -44,12 +44,14 @@ class MainActivity : ComponentActivity() {
                 contract = ActivityResultContracts.RequestPermission()
             ) { isGranted ->
                 if (isGranted) {
-                    musicViewModel.scanLibrary()
+                    musicViewModel.scanLibraryInstant()
                 }
             }
 
             LaunchedEffect(Unit) {
-                if (!PermissionHelper.hasStoragePermission(context)) {
+                if (PermissionHelper.hasStoragePermission(context)) {
+                    musicViewModel.scanLibraryInstant()
+                } else {
                     permissionLauncher.launch(PermissionHelper.getRequiredPermission())
                 }
             }

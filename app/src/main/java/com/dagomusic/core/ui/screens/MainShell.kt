@@ -59,9 +59,11 @@ fun MainShell(
                                 .padding(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_default_artwork),
+                            coil.compose.AsyncImage(
+                                model = song.path,
                                 contentDescription = "Artwork",
+                                placeholder = painterResource(id = R.drawable.ic_default_artwork),
+                                error = painterResource(id = R.drawable.ic_default_artwork),
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
                                     .size(48.dp)
