@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.DagoMusic" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.DagoMusic.AppSplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#0F1016</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.DagoMusic</item>
+    </style>
+</resources>

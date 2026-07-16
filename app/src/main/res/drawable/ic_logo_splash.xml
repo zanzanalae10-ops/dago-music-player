@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="288"
+    android:viewportHeight="288">
+    <!-- Gradient Background -->
+    <path
+        android:pathData="M144,144m-120,0a120,120 0,1 1,240 0a120,120 0,1 1,-240 0"
+        android:fillColor="#0F1016"/>
+    <!-- Outer Ring representing dynamic glass -->
+    <path
+        android:pathData="M144,144m-90,0a90,90 0,1 1,180 0a90,90 0,1 1,-180 0"
+        android:strokeColor="#3F51B5"
+        android:strokeWidth="4"
+        android:fillColor="#1F2232"/>
+    <!-- Musical Note + Wave Graphic (Dago stylized D) -->
+    <path
+        android:pathData="M110,80 L110,200 L160,200 A30,30 0,0 0,190,170 L190,120 C190,90 160,80 110,80 Z"
+        android:fillColor="#9C27B0"/>
+    <path
+        android:pathData="M110,120 C130,120 160,130 160,150 C160,170 130,180 110,180 Z"
+        android:fillColor="#E040FB"/>
+</vector>

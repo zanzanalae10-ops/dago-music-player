@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">داجو ميوزك</string>
+    <string name="unknown_artist">فنان غير معروف</string>
+    <string name="unknown_album">ألبوم غير معروف</string>
+    <string name="unknown_song">أغنية غير معروفة</string>
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_library">المكتبة</string>
+    <string name="nav_search">البحث</string>
+    <string name="nav_playlists">قوائم التشغيل</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <!-- Library Tabs -->
+    <string name="tab_songs">الأغاني</string>
+    <string name="tab_artists">الفنانون</string>
+    <string name="tab_albums">الألبومات</string>
+    <string name="tab_folders">المجلدات</string>
+    <string name="tab_genres">الأنواع</string>
+
+    <!-- Home Sections -->
+    <string name="home_recently_played">آخر تشغيل</string>
+    <string name="home_most_played">الأكثر استماعاً</string>
+    <string name="home_favorites">المفضلة</string>
+    <string name="home_recent_albums">أحدث الألبومات</string>
+    <string name="home_recent_artists">الفنانون الأكثر استماعاً</string>
+    <string name="home_playlists">قوائم التشغيل الخاصة بك</string>
+    <string name="home_newly_added">أضيفت مؤخراً</string>
+    <string name="home_suggestions">اقتراحات ذكية</string>
+    <string name="home_forgotten">أغانٍ منسية</string>
+
+    <!-- Equalizer -->
+    <string name="eq_title">معادل الصوت</string>
+    <string name="eq_bass_boost">زيادة الباص</string>
+    <string name="eq_virtualizer">تأثير مجسم</string>
+    <string name="eq_loudness">تعزيز علو الصوت</string>
+    <string name="eq_preset_normal">عادي</string>
+    <string name="eq_preset_classical">كلاسيكي</string>
+    <string name="eq_preset_dance">راقص</string>
+    <string name="eq_preset_flat">مسطح</string>
+    <string name="eq_preset_folk">شعبي</string>
+    <string name="eq_preset_heavy_metal">ميتال ثقيل</string>
+    <string name="eq_preset_hip_hop">هيب هوب</string>
+    <string name="eq_preset_jazz">جاز</string>
+    <string name="eq_preset_pop">بوب</string>
+    <string name="eq_preset_rock">روك</string>
+    <string name="eq_preset_custom">مخصص</string>
+    <string name="eq_save_preset">حفظ الإعداد المسبق</string>
+    <string name="eq_reset">إعادة ضبط</string>
+
+    <!-- Settings -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_appearance">المظهر</string>
+    <string name="settings_theme_mode">وضع المظهر</string>
+    <string name="settings_theme_light">فاتح</string>
+    <string name="settings_theme_dark">داكن</string>
+    <string name="settings_theme_system">تلقائي حسب النظام</string>
+    <string name="settings_material_you">Material You (ألوان ديناميكية)</string>
+    <string name="settings_dynamic_color_artwork">استخراج الألوان من غلاف الأغنية</string>
+    <string name="settings_audio">التحكم بالصوت</string>
+    <string name="settings_crossfade">التداخل بين الأغاني (بالثواني)</string>
+    <string name="settings_gapless">التشغيل بدون فجوات</string>
+    <string name="settings_fade_in">خفوت تدريجي عند التشغيل</string>
+    <string name="settings_fade_out">خفوت تدريجي عند الإيقاف المؤقت</string>
+    <string name="settings_library_scan">إعدادات الفحص</string>
+    <string name="settings_min_duration">تجاهل المقاطع الأقصر من (ثوانٍ)</string>
+    <string name="settings_min_size">تجاهل الملفات الأصغر من (كيلوبايت)</string>
+    <string name="settings_performance">الأداء</string>
+    <string name="settings_enable_blur">تفعيل تأثير الضباب والزجاج (Blur)</string>
+    <string name="settings_backup">النسخ الاحتياطي والاستعادة</string>
+    <string name="settings_backup_local">نسخ احتياطي إلى ملف محلي</string>
+    <string name="settings_restore_local">استعادة من ملف محلي</string>
+    <string name="settings_language">اللغة / Language</string>
+    <string name="settings_about">حول داجو ميوزك</string>
+    <string name="settings_version">الإصدار 1.0.0</string>
+
+    <!-- Actions / Menus -->
+    <string name="action_play">تشغيل</string>
+    <string name="action_play_next">تشغيل التالي</string>
+    <string name="action_add_to_queue">إضافة لقائمة الانتظار</string>
+    <string name="action_add_to_playlist">إضافة إلى قائمة تشغيل</string>
+    <string name="action_favorite">إضافة للمفضلة</string>
+    <string name="action_remove_favorite">إزالة من المفضلة</string>
+    <string name="action_share">مشاركة الملف</string>
+    <string name="action_delete">حذف نهائي</string>
+    <string name="action_rename">إعادة تسمية الملف</string>
+    <string name="action_properties">الخصائص</string>
+    <string name="action_open_folder">فتح المجلد</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_save">حفظ</string>
+    <string name="action_ok">موافق</string>
+
+    <!-- Search -->
+    <string name="search_placeholder">ابحث عن أغاني، فنانين، ألبومات، مجلدات…</string>
+    <string name="search_recent">عمليات البحث الأخيرة</string>
+    <string name="search_no_results">لا توجد نتائج</string>
+
+    <!-- Playback / Player Controls -->
+    <string name="playback_speed">سرعة التشغيل</string>
+    <string name="playback_pitch">حدة الصوت (Pitch)</string>
+    <string name="playback_balance">توازن الصوت</string>
+    <string name="playback_lyrics">الكلمات</string>
+    <string name="playback_sleep_timer">مؤقت النوم</string>
+    <string name="sleep_timer_off">مؤقت النوم مغلق</string>
+    <string name="sleep_timer_minutes">%1$d دقيقة</string>
+    <string name="sleep_timer_custom">وقت مخصص (بالدقائق)</string>
+    <string name="sleep_timer_set">ضبط مؤقت النوم</string>
+
+    <!-- Metadata Details -->
+    <string name="meta_title">العنوان</string>
+    <string name="meta_artist">الفنان</string>
+    <string name="meta_album">الألبوم</string>
+    <string name="meta_path">المسار</string>
+    <string name="meta_size">الحجم</string>
+    <string name="meta_duration">المدة</string>
+    <string name="meta_bitrate">معدل البت</string>
+    <string name="meta_sample_rate">معدل العينة</string>
+    <string name="meta_codec">الترميز</string>
+    <string name="meta_composer">الملحن</string>
+    <string name="meta_genre">النوع الموسيقي</string>
+    <string name="meta_year">السنة</string>
+
+    <!-- Messages -->
+    <string name="msg_scanning">جاري فحص المكتبة…</string>
+    <string name="msg_scan_complete">اكتمل الفحص. تم العثور على %1$d أغنية.</string>
+    <string name="msg_backup_success">تم حفظ النسخة الاحتياطية بنجاح!</string>
+    <string name="msg_restore_success">تمت استعادة المكتبة بنجاح!</string>
+    <string name="msg_restore_failed">فشلت الاستعادة: الملف غير صالح.</string>
+    <string name="msg_delete_confirm">هل أنت متأكد من رغبتك في حذف هذا الملف نهائياً من جهازك؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="msg_unsupported_file">تعذر تشغيل الملف. تنسيق غير مدعوم.</string>
+</resources>

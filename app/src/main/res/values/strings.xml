@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dago Music</string>
+    <string name="unknown_artist">Unknown Artist</string>
+    <string name="unknown_album">Unknown Album</string>
+    <string name="unknown_song">Unknown Song</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_library">Library</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_playlists">Playlists</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Library Tabs -->
+    <string name="tab_songs">Songs</string>
+    <string name="tab_artists">Artists</string>
+    <string name="tab_albums">Albums</string>
+    <string name="tab_folders">Folders</string>
+    <string name="tab_genres">Genres</string>
+
+    <!-- Home Sections -->
+    <string name="home_recently_played">Recently Played</string>
+    <string name="home_most_played">Most Played</string>
+    <string name="home_favorites">Favorites</string>
+    <string name="home_recent_albums">Recent Albums</string>
+    <string name="home_recent_artists">Top Artists</string>
+    <string name="home_playlists">Your Playlists</string>
+    <string name="home_newly_added">Newly Added</string>
+    <string name="home_suggestions">Smart Suggestions</string>
+    <string name="home_forgotten">Forgotten Tracks</string>
+
+    <!-- Equalizer -->
+    <string name="eq_title">Equalizer</string>
+    <string name="eq_bass_boost">Bass Boost</string>
+    <string name="eq_virtualizer">Virtualizer</string>
+    <string name="eq_loudness">Loudness Enhancer</string>
+    <string name="eq_preset_normal">Normal</string>
+    <string name="eq_preset_classical">Classical</string>
+    <string name="eq_preset_dance">Dance</string>
+    <string name="eq_preset_flat">Flat</string>
+    <string name="eq_preset_folk">Folk</string>
+    <string name="eq_preset_heavy_metal">Heavy Metal</string>
+    <string name="eq_preset_hip_hop">Hip Hop</string>
+    <string name="eq_preset_jazz">Jazz</string>
+    <string name="eq_preset_pop">Pop</string>
+    <string name="eq_preset_rock">Rock</string>
+    <string name="eq_preset_custom">Custom</string>
+    <string name="eq_save_preset">Save Preset</string>
+    <string name="eq_reset">Reset</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme_mode">Theme Mode</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_system">System Default</string>
+    <string name="settings_material_you">Material You (Dynamic Colors)</string>
+    <string name="settings_dynamic_color_artwork">Extract color from artwork</string>
+    <string name="settings_audio">Audio Controls</string>
+    <string name="settings_crossfade">Crossfade (seconds)</string>
+    <string name="settings_gapless">Gapless Playback</string>
+    <string name="settings_fade_in">Fade In on Play</string>
+    <string name="settings_fade_out">Fade Out on Pause</string>
+    <string name="settings_library_scan">Scan Settings</string>
+    <string name="settings_min_duration">Ignore tracks shorter than (seconds)</string>
+    <string name="settings_min_size">Ignore files smaller than (KB)</string>
+    <string name="settings_performance">Performance</string>
+    <string name="settings_enable_blur">Enable Blur and Glassmorphism</string>
+    <string name="settings_backup">Backup &amp; Restore</string>
+    <string name="settings_backup_local">Backup to Local File</string>
+    <string name="settings_restore_local">Restore from Local File</string>
+    <string name="settings_language">Language / اللغة</string>
+    <string name="settings_about">About Dago Music</string>
+    <string name="settings_version">Version 1.0.0</string>
+
+    <!-- Actions / Menus -->
+    <string name="action_play">Play</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="action_add_to_queue">Add to Queue</string>
+    <string name="action_add_to_playlist">Add to Playlist</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="action_remove_favorite">Remove Favorite</string>
+    <string name="action_share">Share File</string>
+    <string name="action_delete">Delete Permanently</string>
+    <string name="action_rename">Rename File</string>
+    <string name="action_properties">Properties</string>
+    <string name="action_open_folder">Open Folder</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Search -->
+    <string name="search_placeholder">Search songs, artists, albums, folders…</string>
+    <string name="search_recent">Recent Searches</string>
+    <string name="search_no_results">No results found</string>
+
+    <!-- Playback / Player Controls -->
+    <string name="playback_speed">Playback Speed</string>
+    <string name="playback_pitch">Pitch</string>
+    <string name="playback_balance">Audio Balance</string>
+    <string name="playback_lyrics">Lyrics</string>
+    <string name="playback_sleep_timer">Sleep Timer</string>
+    <string name="sleep_timer_off">Sleep Timer Off</string>
+    <string name="sleep_timer_minutes">%1$d Minutes</string>
+    <string name="sleep_timer_custom">Custom Time (mins)</string>
+    <string name="sleep_timer_set">Set Sleep Timer</string>
+
+    <!-- Metadata Details -->
+    <string name="meta_title">Title</string>
+    <string name="meta_artist">Artist</string>
+    <string name="meta_album">Album</string>
+    <string name="meta_path">Path</string>
+    <string name="meta_size">Size</string>
+    <string name="meta_duration">Duration</string>
+    <string name="meta_bitrate">Bitrate</string>
+    <string name="meta_sample_rate">Sample Rate</string>
+    <string name="meta_codec">Codec</string>
+    <string name="meta_composer">Composer</string>
+    <string name="meta_genre">Genre</string>
+    <string name="meta_year">Year</string>
+
+    <!-- Messages -->
+    <string name="msg_scanning">Scanning library…</string>
+    <string name="msg_scan_complete">Scan completed. %1$d songs found.</string>
+    <string name="msg_backup_success">Backup saved successfully!</string>
+    <string name="msg_restore_success">Library restored successfully!</string>
+    <string name="msg_restore_failed">Restore failed: File invalid.</string>
+    <string name="msg_delete_confirm">Are you sure you want to permanently delete this file from your device? This cannot be undone.</string>
+    <string name="msg_unsupported_file">Unable to play file. Unsupported format.</string>
+</resources>

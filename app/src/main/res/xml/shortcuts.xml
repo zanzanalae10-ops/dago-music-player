@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="search"
+        android:enabled="true"
+        android:icon="@drawable/ic_logo_splash"
+        android:shortcutShortLabel="@string/nav_search"
+        android:shortcutLongLabel="@string/nav_search">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.dagomusic"
+            android:targetClass="com.dagomusic.MainActivity"
+            android:data="dagomusic://search" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_logo_splash"
+        android:shortcutShortLabel="@string/home_favorites"
+        android:shortcutLongLabel="@string/home_favorites">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.dagomusic"
+            android:targetClass="com.dagomusic.MainActivity"
+            android:data="dagomusic://favorites" />
+    </shortcut>
+</shortcuts>
