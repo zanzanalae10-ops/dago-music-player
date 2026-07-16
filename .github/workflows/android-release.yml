@@ -40,9 +40,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/jules-3757642057084065443-80524082'
         with:
-          tag_name: v1.1
-          name: "v1.1 (Production Release)"
-          body: "Dago Music Player Production Build v1.1"
+          tag_name: v1.2
+          name: "v1.2 (Production Release)"
+          body: "Dago Music Player Production Build v1.2"
           draft: false
           prerelease: false
           files: app/build/outputs/apk/release/app-release.apk
