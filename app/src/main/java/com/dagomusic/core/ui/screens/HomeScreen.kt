@@ -8,12 +8,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.dagomusic.R
 import com.dagomusic.core.database.entities.SongEntity
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 
 @Composable
@@ -33,6 +32,7 @@ fun HomeScreen(
     viewModel: MusicViewModel,
     onSongSelected: (SongEntity) -> Unit
 ) {
+    val strings = LocalAppStrings.current
     val recentlyPlayed by viewModel.recentlyPlayed.collectAsState()
     val recentlyAdded by viewModel.recentlyAdded.collectAsState()
     val mostPlayed by viewModel.mostPlayed.collectAsState()
@@ -46,7 +46,7 @@ fun HomeScreen(
     ) {
         // App header / greetings
         Text(
-            text = "Dago Music",
+            text = strings.appName,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -61,7 +61,7 @@ fun HomeScreen(
         // Section: Recently Played
         if (recentlyPlayed.isNotEmpty()) {
             HomeSection(
-                title = "Recently Played",
+                title = strings.homeRecentlyPlayed,
                 songs = recentlyPlayed,
                 onSongSelected = onSongSelected
             )
@@ -71,7 +71,7 @@ fun HomeScreen(
         // Section: Most Played
         if (mostPlayed.isNotEmpty()) {
             HomeSection(
-                title = "Most Played",
+                title = strings.homeMostPlayed,
                 songs = mostPlayed,
                 onSongSelected = onSongSelected
             )
@@ -80,7 +80,7 @@ fun HomeScreen(
 
         // Section: Newly Added
         HomeSection(
-            title = "Newly Added",
+            title = strings.homeNewlyAdded,
             songs = if (recentlyAdded.isNotEmpty()) recentlyAdded else allSongs,
             onSongSelected = onSongSelected
         )

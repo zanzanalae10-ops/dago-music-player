@@ -9,6 +9,7 @@ import com.dagomusic.core.database.dao.MusicDao
 import com.dagomusic.core.database.entities.PlaylistEntity
 import com.dagomusic.core.database.entities.PlaylistItemEntity
 import com.dagomusic.core.database.entities.SongEntity
+import com.dagomusic.core.player.PlaybackConnection
 import com.dagomusic.core.settings.DagoDataStore
 import com.dagomusic.core.workers.LibraryScanWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,8 @@ class MusicViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val musicDao: MusicDao,
     val dataStore: DagoDataStore,
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val playbackConnection: PlaybackConnection
 ) : ViewModel() {
 
     // Songs
@@ -45,26 +47,27 @@ class MusicViewModel @Inject constructor(
     val playlists: StateFlow<List<PlaylistEntity>> = musicDao.getAllPlaylists()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    // Active track & playing states
-    private val _isPlaying = MutableStateFlow(false)
-    val isPlaying: StateFlow<Boolean> = _isPlaying.asStateFlow()
+    // Active track & playing states synced directly to Media3
+    val isPlaying: StateFlow<Boolean> = playbackConnection.isPlaying
+    val currentPosition: StateFlow<Long> = playbackConnection.currentPosition
 
     private val _currentPlayingSong = MutableStateFlow<SongEntity?>(null)
     val currentPlayingSong: StateFlow<SongEntity?> = _currentPlayingSong.asStateFlow()
-
-    private val _currentPosition = MutableStateFlow(0L)
-    val currentPosition: StateFlow<Long> = _currentPosition.asStateFlow()
 
     init {
         // Automatically scan library on startup
         scanLibrary()
 
-        // Sync last active song
+        // Sync active MediaItem back to SongEntity from local database
         viewModelScope.launch {
-            dataStore.lastPlayingPath.collectLatest { path ->
-                if (path != null) {
-                    val song = musicDao.getSongByPath(path)
-                    _currentPlayingSong.value = song
+            playbackConnection.currentMediaItem.collect { mediaItem ->
+                if (mediaItem != null) {
+                    val song = musicDao.getSongByPath(mediaItem.mediaId)
+                    if (song != null) {
+                        _currentPlayingSong.value = song
+                    }
+                } else {
+                    _currentPlayingSong.value = null
                 }
             }
         }
@@ -77,7 +80,7 @@ class MusicViewModel @Inject constructor(
 
     fun playSong(song: SongEntity) {
         _currentPlayingSong.value = song
-        _isPlaying.value = true
+        playbackConnection.play(song.path, song.title, song.artist, song.album)
         viewModelScope.launch {
             dataStore.setLastPlayingPath(song.path)
             musicDao.incrementPlayCount(song.path)
@@ -85,32 +88,32 @@ class MusicViewModel @Inject constructor(
     }
 
     fun togglePlayPause() {
-        _isPlaying.value = !_isPlaying.value
+        playbackConnection.togglePlayPause()
     }
 
     fun playNext() {
-        // Simple mock rotation for demo purposes when no media session bound directly
-        val songs = allSongs.value
-        if (songs.isNotEmpty()) {
-            val currentIndex = songs.indexOfFirst { it.path == _currentPlayingSong.value?.path }
-            val nextIndex = (currentIndex + 1) % songs.size
-            playSong(songs[nextIndex])
-        }
+        playbackConnection.playNext()
     }
 
     fun playPrevious() {
-        val songs = allSongs.value
-        if (songs.isNotEmpty()) {
-            val currentIndex = songs.indexOfFirst { it.path == _currentPlayingSong.value?.path }
-            val prevIndex = if (currentIndex <= 0) songs.size - 1 else currentIndex - 1
-            playSong(songs[prevIndex])
-        }
+        playbackConnection.playPrevious()
+    }
+
+    fun seekTo(positionMs: Long) {
+        playbackConnection.seekTo(positionMs)
+    }
+
+    fun setShuffle(enabled: Boolean) {
+        playbackConnection.setShuffle(enabled)
+    }
+
+    fun setRepeatMode(mode: Int) {
+        playbackConnection.setRepeatMode(mode)
     }
 
     fun toggleFavorite(song: SongEntity) {
         viewModelScope.launch {
             musicDao.setFavorite(song.path, !song.isFavorite)
-            // Trigger local reload of active song status
             if (_currentPlayingSong.value?.path == song.path) {
                 _currentPlayingSong.value = song.copy(isFavorite = !song.isFavorite)
             }
@@ -122,7 +125,6 @@ class MusicViewModel @Inject constructor(
             musicDao.deleteSongByPath(song.path)
             if (_currentPlayingSong.value?.path == song.path) {
                 _currentPlayingSong.value = null
-                _isPlaying.value = false
             }
         }
     }

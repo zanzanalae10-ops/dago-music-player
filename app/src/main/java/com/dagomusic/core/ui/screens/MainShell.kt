@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.dagomusic.R
 import com.dagomusic.core.navigation.Screen
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 
 @Composable
@@ -34,6 +35,7 @@ fun MainShell(
     onExpandPlayer: () -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
+    val strings = LocalAppStrings.current
     val currentSong by viewModel.currentPlayingSong.collectAsState()
     val isPlaying by viewModel.isPlaying.collectAsState()
     val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
@@ -110,7 +112,7 @@ fun MainShell(
                         selected = currentScreen == Screen.Home,
                         onClick = { onTabSelected(Screen.Home) },
                         icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                        label = { Text("Home", fontSize = 10.sp) },
+                        label = { Text(strings.navHome, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = Color.Gray
@@ -120,7 +122,7 @@ fun MainShell(
                         selected = currentScreen == Screen.Library,
                         onClick = { onTabSelected(Screen.Library) },
                         icon = { Icon(Icons.Default.LibraryMusic, contentDescription = "Library") },
-                        label = { Text("Library", fontSize = 10.sp) },
+                        label = { Text(strings.navLibrary, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = Color.Gray
@@ -130,7 +132,7 @@ fun MainShell(
                         selected = currentScreen == Screen.Search,
                         onClick = { onTabSelected(Screen.Search) },
                         icon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-                        label = { Text("Search", fontSize = 10.sp) },
+                        label = { Text(strings.navSearch, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = Color.Gray
@@ -140,7 +142,7 @@ fun MainShell(
                         selected = currentScreen == Screen.Playlists,
                         onClick = { onTabSelected(Screen.Playlists) },
                         icon = { Icon(Icons.Default.PlaylistPlay, contentDescription = "Playlists") },
-                        label = { Text("Playlists", fontSize = 10.sp) },
+                        label = { Text(strings.navPlaylists, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = Color.Gray
@@ -150,7 +152,7 @@ fun MainShell(
                         selected = currentScreen == Screen.Settings,
                         onClick = { onTabSelected(Screen.Settings) },
                         icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                        label = { Text("Settings", fontSize = 10.sp) },
+                        label = { Text(strings.navSettings, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = Color.Gray

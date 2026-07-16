@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.dagomusic.R
 import com.dagomusic.core.database.entities.SongEntity
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,6 +32,7 @@ fun SearchScreen(
     viewModel: MusicViewModel,
     onSongSelected: (SongEntity) -> Unit
 ) {
+    val strings = LocalAppStrings.current
     var query by remember { mutableStateOf("") }
     val allSongs by viewModel.allSongs.collectAsState()
 
@@ -51,7 +53,7 @@ fun SearchScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Search",
+            text = strings.navSearch,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
@@ -65,7 +67,7 @@ fun SearchScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(12.dp)),
-            placeholder = { Text("Search songs, artists, albums…") },
+            placeholder = { Text(strings.searchPlaceholder) },
             leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
             trailingIcon = {
                 if (query.isNotEmpty()) {
@@ -137,7 +139,7 @@ fun SearchScreen(
                             modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("No matching tracks found", color = Color.Gray)
+                            Text(strings.searchNoResults, color = Color.Gray)
                         }
                     }
                 }

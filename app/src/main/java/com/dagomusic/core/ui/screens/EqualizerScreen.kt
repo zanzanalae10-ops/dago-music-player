@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,6 +24,7 @@ fun EqualizerScreen(
     viewModel: MusicViewModel,
     onBack: () -> Unit
 ) {
+    val strings = LocalAppStrings.current
     var eqEnabled by remember { mutableStateOf(true) }
     var bassBoost by remember { mutableFloatStateOf(15f) }
     var virtualizer by remember { mutableFloatStateOf(20f) }
@@ -40,7 +42,7 @@ fun EqualizerScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Audio Equalizer", color = Color.White) },
+                title = { Text(strings.eqTitle, color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
@@ -201,7 +203,7 @@ fun EqualizerScreen(
 
                     // Bass Boost
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Bass Boost", color = Color.LightGray, modifier = Modifier.width(80.dp))
+                        Text(strings.eqBassBoost, color = Color.LightGray, modifier = Modifier.width(80.dp))
                         Slider(
                             value = bassBoost,
                             onValueChange = { bassBoost = it },
@@ -213,7 +215,7 @@ fun EqualizerScreen(
 
                     // Virtualizer
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("3D Sound", color = Color.LightGray, modifier = Modifier.width(80.dp))
+                        Text(strings.eqVirtualizer, color = Color.LightGray, modifier = Modifier.width(80.dp))
                         Slider(
                             value = virtualizer,
                             onValueChange = { virtualizer = it },

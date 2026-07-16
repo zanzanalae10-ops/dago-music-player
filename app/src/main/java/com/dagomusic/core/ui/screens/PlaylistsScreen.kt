@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,6 +26,7 @@ import com.dagomusic.core.ui.viewmodel.MusicViewModel
 fun PlaylistsScreen(
     viewModel: MusicViewModel
 ) {
+    val strings = LocalAppStrings.current
     val playlists by viewModel.playlists.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     var playlistName by remember { mutableStateOf("") }
@@ -40,7 +42,7 @@ fun PlaylistsScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Playlists",
+                text = strings.navPlaylists,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -116,12 +118,12 @@ fun PlaylistsScreen(
                             }
                         }
                     ) {
-                        Text("Create")
+                        Text(strings.actionSave)
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { showDialog = false }) {
-                        Text("Cancel")
+                        Text(strings.actionCancel)
                     }
                 }
             )

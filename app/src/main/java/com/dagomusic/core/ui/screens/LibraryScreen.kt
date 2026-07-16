@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.dagomusic.R
 import com.dagomusic.core.database.entities.SongEntity
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 
 @Composable
@@ -32,9 +33,10 @@ fun LibraryScreen(
     viewModel: MusicViewModel,
     onSongSelected: (SongEntity) -> Unit
 ) {
+    val strings = LocalAppStrings.current
     val songs by viewModel.allSongs.collectAsState()
     var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Songs", "Favorites")
+    val tabs = listOf(strings.tabSongs, strings.homeFavorites)
 
     Column(
         modifier = Modifier
@@ -42,7 +44,7 @@ fun LibraryScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Library",
+            text = strings.navLibrary,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
@@ -108,6 +110,7 @@ fun LibrarySongItem(
     onToggleFavorite: () -> Unit,
     onDelete: () -> Unit
 ) {
+    val strings = LocalAppStrings.current
     var showMenu by remember { mutableStateOf(false) }
 
     Row(
@@ -158,7 +161,7 @@ fun LibrarySongItem(
                 onDismissRequest = { showMenu = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Delete Permanently") },
+                    text = { Text(strings.actionDelete) },
                     onClick = {
                         onDelete()
                         showMenu = false

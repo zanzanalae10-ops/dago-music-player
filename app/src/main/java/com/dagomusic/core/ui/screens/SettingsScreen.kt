@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 fun SettingsScreen(
     viewModel: MusicViewModel
 ) {
+    val strings = LocalAppStrings.current
     val themeMode by viewModel.dataStore.themeMode.collectAsState(initial = "SYSTEM")
     val materialYou by viewModel.dataStore.materialYou.collectAsState(initial = true)
     val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
@@ -42,7 +44,7 @@ fun SettingsScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Settings",
+            text = strings.navSettings,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
@@ -50,7 +52,7 @@ fun SettingsScreen(
         )
 
         // Group 1: Appearance
-        Text("Appearance", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(bottom = 8.dp))
+        Text(strings.settingsAppearance, color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(bottom = 8.dp))
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -79,7 +81,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Material You", color = Color.White)
+                Text(strings.settingsMaterialYou, color = Color.White)
                 Switch(
                     checked = materialYou,
                     onCheckedChange = {
@@ -96,7 +98,7 @@ fun SettingsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Enable Blur (Glassmorphism)", color = Color.White)
+                    Text(strings.settingsEnableBlur, color = Color.White)
                     Text("Turn off for better performance on weaker devices", color = Color.Gray, fontSize = 12.sp)
                 }
                 Switch(
@@ -149,7 +151,7 @@ fun SettingsScreen(
                 Icon(Icons.Default.Language, contentDescription = null, tint = Color.White)
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    Text("Language / اللغة", color = Color.White)
+                    Text(strings.settingsLanguage, color = Color.White)
                     Text(if (appLanguage == "en") "English" else "العربية", color = Color.Gray, fontSize = 12.sp)
                 }
             }
@@ -170,8 +172,8 @@ fun SettingsScreen(
                 Icon(Icons.Default.Info, contentDescription = null, tint = Color.White)
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    Text("Dago Music", color = Color.White, fontWeight = FontWeight.Bold)
-                    Text("Version 1.0.0 (Production Ready)", color = Color.Gray, fontSize = 12.sp)
+                    Text(strings.appName, color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(strings.settingsVersion, color = Color.Gray, fontSize = 12.sp)
                 }
             }
             Text("Created by an elite team of engineers to deliver the ultimate local playback experience.", color = Color.LightGray, fontSize = 12.sp)

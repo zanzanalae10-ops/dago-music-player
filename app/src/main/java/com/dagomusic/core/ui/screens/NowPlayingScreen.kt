@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dagomusic.R
 import com.dagomusic.core.ui.components.glassmorphic
+import com.dagomusic.core.ui.theme.LocalAppStrings
 import com.dagomusic.core.ui.viewmodel.MusicViewModel
 import kotlinx.coroutines.delay
 
@@ -34,6 +35,7 @@ fun NowPlayingScreen(
     onBack: () -> Unit,
     onNavigateToEqualizer: () -> Unit
 ) {
+    val strings = LocalAppStrings.current
     val song by viewModel.currentPlayingSong.collectAsState()
     val isPlaying by viewModel.isPlaying.collectAsState()
     val enableBlur by viewModel.dataStore.enableBlur.collectAsState(initial = true)
